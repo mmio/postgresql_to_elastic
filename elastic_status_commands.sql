@@ -6,7 +6,7 @@ AS
 $$
 	BEGIN
 		RETURN http_get(
-			FORMAT('%s:%s%s',
+			format('%s:%s%s',
 				current_setting('ELASTIC.IP'),
 				current_setting('ELASTIC.PORT'),
 				endpoint
@@ -31,7 +31,7 @@ RETURNS JSON
 AS
 $$
         BEGIN
-                RETURN content FROM build_request(FORMAT('/products/_doc/%s', product_id));
+                RETURN content FROM build_request(format('/products/_doc/%s', product_id));
         END;
 $$
 LANGUAGE plpgsql;
