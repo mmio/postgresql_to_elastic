@@ -1,7 +1,7 @@
 \i conf.sql
 
 -- Bulk
-DROP FUNCTION IF EXIST es_send_bulk(batch TEXT);
+DROP FUNCTION IF EXISTS es_send_bulk(batch TEXT);
 CREATE OR REPLACE FUNCTION es_send_bulk(batch TEXT)
 RETURNS HTTP_RESPONSE
 LANGUAGE plpgsql

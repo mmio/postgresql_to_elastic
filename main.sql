@@ -12,8 +12,8 @@ $$
     BEGIN
 		table_with_json_tweets := convert_tables_to_json();
 		RAISE NOTICE '%', table_with_json_tweets;
-		EXIT;
         FOR req IN SELECT * FROM create_request_batches('tweets_raw', table_with_json_tweets) LOOP
+			EXIT;
 			res := es_send_bulk(req);
 
 			IF es_bad_response(res) THEN

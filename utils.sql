@@ -15,7 +15,7 @@ AS $$
    END;		
 $$;
 
-DROP FUNCTION IF EXISTS last_item_id(start BIGINT, step BIGINT, end BIGINT);
+DROP FUNCTION IF EXISTS last_item_id(first BIGINT, step BIGINT, last BIGINT);
 CREATE FUNCTION last_item_id(first BIGINT, step BIGINT, last BIGINT)
 RETURNS BIGINT
 LANGUAGE PLPGSQL
@@ -51,7 +51,8 @@ AS $$
     END;
 $$;
 
-DROP FUNCTION IF EXISTS normalize_text(input TEXT)
+DROP FUNCTION IF EXISTS normalize_text(input TEXT);
+CREATE FUNCTION IF EXISTS normalize_text(input TEXT)
 RETURNS TEXT
 LANGUAGE SQL
 AS $$
@@ -59,7 +60,7 @@ AS $$
 $$;
 
 DROP FUNCTION IF EXISTS geometry_to_json(location GEOMETRY);
-CREATE FUNCTION IF EXISTS geometry_to_json(location GEOMETRY)
+CREATE FUNCTION geometry_to_json(location GEOMETRY)
 RETURNS JSON
 LANGUAGE SQL
 AS $$

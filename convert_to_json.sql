@@ -32,6 +32,7 @@ $$;
 
 DROP FUNCTION IF EXISTS convert_tables_to_json();
 CREATE FUNCTION convert_tables_to_json()
+RETURNS TEXT
 LANGUAGE SQL
 AS $$
 	CALL create_all_json_tables();
