@@ -13,6 +13,7 @@ $$
 		-- table_with_json_tweets := convert_tables_to_json();
 		table_with_json_tweets := 'tweets_json';
         FOR req IN SELECT * FROM create_request_batches('tweets_raw', table_with_json_tweets) LOOP
+			RAISE NOTICE '%', req;
 			EXIT;
 			res := es_send_bulk(req);
 
