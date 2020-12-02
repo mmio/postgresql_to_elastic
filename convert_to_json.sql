@@ -35,8 +35,12 @@ CREATE FUNCTION convert_tables_to_json()
 RETURNS TEXT
 LANGUAGE SQL
 AS $$
-	CALL create_all_json_tables();
-
+	CALL drop_all_json_tables();
+	CREATE TABLE accounts_json(id  bigint primary key, jsn JSON);
+   	CREATE TABLE hashtags_by_mention_json(tweet_id varchar, jsn json);
+   	CREATE TABLE accounts_by_mention_json(tweet_id varchar, jsn json);
+   	CREATE TABLE parentless_tweets_json(tweet_id varchar, jsn JSON);
+   	CREATE TABLE tweets_json(id SERIAL PRIMARY KEY,	jsn JSON);
 	-- Convert accounts to json 
 	INSERT INTO accounts_json (id, jsn)
 		SELECT
