@@ -43,8 +43,8 @@ AS $$
 			id,
 			json_strip_nulls(
 				json_build_object(
-					'screen_name', normalize_text(screen_name),
-					'name', normalize_text(name),
+					'screen_name', normalize_varchar(screen_name),
+					'name', normalize_varchar(name),
 					'description', normalize_text(description),
 					'followers_count', followers_count,
 					'friends_count', friends_count,

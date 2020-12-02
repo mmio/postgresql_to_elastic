@@ -52,15 +52,15 @@ AS $$
 $$;
 
 DROP FUNCTION IF EXISTS normalize_text(input TEXT);
-CREATE FUNCTION IF EXISTS normalize_text(input TEXT)
+CREATE FUNCTION normalize_text(input TEXT)
 RETURNS TEXT
 LANGUAGE SQL
 AS $$
 	SELECT replace(trim(both '"' from input), '\n', ' ')
 $$;
 
-DROP FUNCTION IF EXISTS normalize_text(input VARCHAR);
-CREATE FUNCTION IF EXISTS normalize_text(input VARCHAR)
+DROP FUNCTION IF EXISTS normalize_varchar(input VARCHAR);
+CREATE FUNCTION normalize_varchar(input VARCHAR)
 RETURNS VARCHAR
 LANGUAGE SQL
 AS $$
