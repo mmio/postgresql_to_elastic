@@ -59,6 +59,14 @@ AS $$
 	SELECT replace(trim(both '"' from input), '\n', ' ')
 $$;
 
+DROP FUNCTION IF EXISTS normalize_text(input VARCHAR);
+CREATE FUNCTION IF EXISTS normalize_text(input VARCHAR)
+RETURNS VARCHAR
+LANGUAGE SQL
+AS $$
+	SELECT replace(trim(both '"' from input), '\n', ' ')
+$$;
+
 DROP FUNCTION IF EXISTS geometry_to_json(location GEOMETRY);
 CREATE FUNCTION geometry_to_json(location GEOMETRY)
 RETURNS JSON
