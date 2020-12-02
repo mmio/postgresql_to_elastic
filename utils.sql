@@ -50,3 +50,18 @@ AS $$
       END LOOP;
     END;
 $$;
+
+DROP FUNCTION IF EXISTS normalize_text(input TEXT)
+RETURNS TEXT
+LANGUAGE SQL
+AS $$
+	SELECT replace(trim(both '"' from input), '\n', ' ')
+$$;
+
+DROP FUNCTION IF EXISTS geometry_to_json(location GEOMETRY);
+CREATE FUNCTION IF EXISTS geometry_to_json(location GEOMETRY)
+RETURNS JSON
+LANGUAGE SQL
+AS $$
+	SELECT ST_AsGeoJSON(ST_AsText(location))::json
+$$;

@@ -30,13 +30,6 @@ AS $$
    CREATE TABLE tweets_json(id SERIAL PRIMARY KEY,	jsn JSON);
 $$;
 
-DROP FUNCTION IF EXISTS normalize_text(input TEXT)
-RETURN TEXT
-LANGUAGE SQL
-AS $$
-	SELECT replace(trim(both '"' from input), '\n', ' ')
-$$;
-
 CALL create_all_json_tables();
 
 -- Convert accounts to json 
@@ -45,9 +38,9 @@ INSERT INTO accounts_json (id, jsn)
         id,
         json_strip_nulls(
 			json_build_object(
-				'screen_name', trim(both '"' from screen_name),
-				'name', trim(both '"' from name),
-				'description', replace(description, '\n', ' '),
+				'screen_name', normalize_text(screen_name),
+				'name', normalize_text(name),
+				'description', normalize_text(description),
 				'followers_count', followers_count,
 				'friends_count', friends_count,
 				'statuses_count', statuses_count))
@@ -76,11 +69,11 @@ INSERT INTO parentless_tweets_json
 	SELECT t.id,
 		json_strip_nulls(
 			json_build_object(
-				'content', replace(trim(both '"' from t.content), '\n', ' '),
+				'content', normalize_text(t.content),
 				'author', aj.jsn,
 				'hashtags', hbmj.jsn,
 				'mentions', abmj.jsn,
-				'location', ST_AsGeoJSON(ST_AsText(t.location))::json,
+				'location', geometry_to_json(t.location),
 				'retweet_count', t.retweet_count,
 				'favorite_count', t.favorite_count,
 				'happended_at', t.happended_at,
@@ -98,12 +91,12 @@ INSERT INTO tweets_json (jsn)
 	SELECT
 		json_strip_nulls(
 			json_build_object(
-				'content', replace(trim(both '"' from t.content), '\n', ' '),
+				'content', normalize_text(t.content),
 				'author', aj.jsn,
 				'parent', ptj.jsn,
 				'hashtags', hbmj.jsn,
 				'mentions', abmj.jsn,
-				'location', ST_AsGeoJSON(ST_AsText(t.location))::json,
+				'location', geometry_to_json(t.location),
 				'retweet_count', t.retweet_count,
 				'favorite_count', t.favorite_count,
 				'happended_at', t.happended_at,
