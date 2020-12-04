@@ -1,6 +1,6 @@
 \i utils.sql
 \i elastic_api.sql
--- \i convert_to_json.sql
+\i convert_to_json.sql
 
 DO
 $$
