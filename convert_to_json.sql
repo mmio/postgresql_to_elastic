@@ -29,11 +29,11 @@ AS $$
    CREATE TABLE tweets_json(id SERIAL PRIMARY KEY,	jsn JSON);
 $$;
 
-DROP FUNCTION IF EXISTS convert_tables_to_json();
-CREATE FUNCTION convert_tables_to_json()
-RETURNS TEXT
-LANGUAGE SQL
-AS $$
+CALL drop_all_json_tables();
+CALL create_all_json_tables();
+
+SELECT 'INSERTING INTO TABLES';
+
 	-- Convert accounts to json 
 	INSERT INTO accounts_json (id, jsn)
 		SELECT
@@ -111,10 +111,3 @@ AS $$
 				LEFT JOIN countries c on t.country_id = c.id
 				LEFT JOIN parentless_tweets_json ptj on t.parent_id = ptj.tweet_id;
 
-	CALL drop_tmp_json_tables();
-
-	SELECT 'tweets_json';
-$$;
-
-CALL drop_all_json_tables();
-CALL create_all_json_tables();
