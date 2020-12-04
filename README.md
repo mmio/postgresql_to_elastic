@@ -1,6 +1,6 @@
 # Requirements
 
-The scirpt requires *postgis* and *psql-http* extensions.
+The scirpt requires `postgres >= 12` and the **postgis** and **psql-http** extensions.
 
 # Running
 
